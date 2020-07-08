@@ -58,8 +58,10 @@ class myMeteo:
         from urllib.request import urlopen
         httpAnswer = urlopen(
             'https://api.meteo-concept.com/api/forecast/nextHours?token=%s&insee=%s&hourly=true' % (self._token, self._insee))
-        forecast = json.loads(httpAnswer.read())['forecast']
-        return forecast
+        self._forecast = json.loads(httpAnswer.read())['forecast']
+        return self._forecast
+
+
 
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
