@@ -77,83 +77,30 @@ class myMeteo:
     def getLastSynchro(self):
         return self._lastSynchro
 
+    def _getIndice(self, duree ):
+        return {
+            "1H":0,
+            "2H":1,
+            "3H":2,
+            "4H":3,
+            "5H":4,
+            "6H":5,
+            "7H":6,
+            "8H":7,
+            "9H":8,
+            "10H":9,
+            "11H":10,
+            "12H":11
+        }[ duree ]
+
     def getPluieADelai(self, duree):
-        if duree == "1H":
-            return self._forecast[0]['rr10']
-        elif duree == "2H":
-            return self._forecast[1]['rr10']
-        elif duree == "3H":
-            return self._forecast[2]['rr10']
-        elif duree == "4H":
-            return self._forecast[3]['rr10']
-        elif duree == "5H":
-            return self._forecast[4]['rr10']
-        elif duree == "6H":
-            return self._forecast[5]['rr10']
-        elif duree == "7H":
-            return self._forecast[6]['rr10']
-        elif duree == "8H":
-            return self._forecast[7]['rr10']
-        elif duree == "9H":
-            return self._forecast[8]['rr10']
-        elif duree == "10H":
-            return self._forecast[9]['rr10']
-        elif duree == "11H":
-            return self._forecast[10]['rr10']
-        elif duree == "12H":
-            return self._forecast[11]['rr10']
+        return self._forecast[self._getIndice[duree]]['rr10']
 
     def getProbaPluieDelai(self, duree):
-        if duree == "1H":
-            return self._forecast[0]['probarain']
-        elif duree == "2H":
-            return self._forecast[1]['probarain']
-        elif duree == "3H":
-            return self._forecast[2]['probarain']
-        elif duree == "4H":
-            return self._forecast[3]['probarain']
-        elif duree == "5H":
-            return self._forecast[4]['probarain']
-        elif duree == "6H":
-            return self._forecast[5]['probarain']
-        elif duree == "7H":
-            return self._forecast[6]['probarain']
-        elif duree == "8H":
-            return self._forecast[7]['probarain']
-        elif duree == "9H":
-            return self._forecast[8]['probarain']
-        elif duree == "10H":
-            return self._forecast[9]['probarain']
-        elif duree == "11H":
-            return self._forecast[10]['probarain']
-        elif duree == "12H":
-            return self._forecast[11]['probarain']
+        return self._forecast[self._getIndice[duree]]['probarain']
 
     def getTemperatureADelai(self, duree):
-        if duree == "1H":
-            return self._forecast[0]['temp2m']
-        elif duree == "2H":
-            return self._forecast[1]['temp2m']
-        elif duree == "3H":
-            return self._forecast[2]['temp2m']
-        elif duree == "4H":
-            return self._forecast[3]['temp2m']
-        elif duree == "5H":
-            return self._forecast[4]['temp2m']
-        elif duree == "6H":
-            return self._forecast[5]['temp2m']
-        elif duree == "7H":
-            return self._forecast[6]['temp2m']
-        elif duree == "8H":
-            return self._forecast[7]['temp2m']
-        elif duree == "9H":
-            return self._forecast[8]['temp2m']
-        elif duree == "10H":
-            return self._forecast[9]['temp2m']
-        elif duree == "11H":
-            return self._forecast[10]['temp2m']
-        elif duree == "12H":
-            return self._forecast[11]['temp2m']
+        return self._forecast[self._getIndice[duree]]['temp2m']
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Set up the platform."""
