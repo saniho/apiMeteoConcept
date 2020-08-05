@@ -32,8 +32,6 @@ SCAN_INTERVAL = timedelta(seconds=1800)
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
-        vol.Required(CONF_USERNAME): cv.string,
-        vol.Required(CONF_PASSWORD): cv.string,
         vol.Optional(CONF_TOKEN): cv.string,
         vol.Optional(CONF_CODE): cv.string,
         vol.Optional(CONF_NAME): cv.string,
@@ -46,7 +44,6 @@ class myMeteo:
         self._insee = insee
         self._lastSynchro = None
         self._update_interval = _update_interval
-        pass
 
 
     def update(self):
@@ -54,31 +51,24 @@ class myMeteo:
         import datetime
 
         courant = datetime.datetime.now()
-        #_LOGGER.warning("--------------")
-        #_LOGGER.warning("tente un update  ? ... %s" %(self._lastSynchro))
         if ( self._lastSynchro == None ) or \
             ( (self._lastSynchro + self._update_interval) < courant ):
 
-            #_LOGGER.warning("tente un update  ? ...")
-            #if ( self._lastSynchro != None):
-            #    _LOGGER.warning("self._lastSynchro + self._update_interval = %s" %(self._lastSynchro + self._update_interval) )
-            #    _LOGGER.warning("courant = %s" %(courant))
-
-            #_LOGGER.warning("update ...")
             from urllib.request import urlopen
             httpAnswer = urlopen(
                 'https://api.meteo-concept.com/api/forecast/nextHours?token=%s&insee=%s&hourly=true' % (self._token, self._insee))
             self._forecast = json.loads(httpAnswer.read())['forecast']
             self._lastSynchro = datetime.datetime.now()
 
-            #_LOGGER.warning("update fait, last synchro ... %s " %(self._lastSynchro))
+            _LOGGER.warning("update fait, last synchro ... %s " %(self._lastSynchro))
         return self._forecast
 
     def getLastSynchro(self):
         return self._lastSynchro
 
     def _getIndice(self, duree ):
-        return {
+        #_LOGGER.warning("duree getIndice ... *%s* " % (duree))
+        monDico =  {
             "1H":0,
             "2H":1,
             "3H":2,
@@ -91,16 +81,20 @@ class myMeteo:
             "10H":9,
             "11H":10,
             "12H":11
-        }[ duree ]
+        }
+        return monDico[ duree ]
 
     def getPluieADelai(self, duree):
-        return self._forecast[self._getIndice[duree]]['rr10']
+        #_LOGGER.warning("self._forecast ... %s " % (self._forecast))
+        #_LOGGER.warning("duree ... *%s* " % (duree))
+        #_LOGGER.warning("self._getIndice[duree] ... %s " % (self._getIndice(duree)))
+        return self._forecast[self._getIndice(duree)]['rr10']
 
     def getProbaPluieDelai(self, duree):
-        return self._forecast[self._getIndice[duree]]['probarain']
+        return self._forecast[self._getIndice(duree)]['probarain']
 
     def getTemperatureADelai(self, duree):
-        return self._forecast[self._getIndice[duree]]['temp2m']
+        return self._forecast[self._getIndice(duree)]['temp2m']
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Set up the platform."""
