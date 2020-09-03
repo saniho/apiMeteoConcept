@@ -7,6 +7,12 @@ pour l'utiliser, il suffit d'ajouter le sensor suivant :
 
 ```yaml
 - platform: apiMeteoConcept
-  code: <code de la ville>
+  code: <code INSEE de la ville>
   token: <votre token>
 ```
+la creation du token se fait ici : https://api.meteo-concept.com/
+
+pour le moment implementation de la prevision pluie( quantité et pourcentage ) sur les 12 prochaines heures
+
+
+![picture](img/sensor.png)
