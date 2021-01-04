@@ -155,11 +155,12 @@ class cumulPluieAh(Entity):
         """Update device state."""
         self._myMeteo.update()
         status_counts = defaultdict(int)
-        status_counts[0] = self._myMeteo.getPluieADelai( self._delai )
+        delai = self._myMeteo.getPluieADelai( self._delai )
 
+        status_counts["Delai"] = delai
         self._attributes = {ATTR_ATTRIBUTION: ""}
         self._attributes.update(status_counts)
-        self._state = sum(status_counts.values())
+        self._state = "%s" %delai
 
     @property
     def device_state_attributes(self):
@@ -205,11 +206,12 @@ class temperatureAh(Entity):
         """Update device state."""
         self._myMeteo.update()
         status_counts = defaultdict(int)
-        status_counts[0] = self._myMeteo.getTemperatureADelai( self._delai )
+        temperature = self._myMeteo.getTemperatureADelai( self._delai )
 
+        status_counts["temperature"] = temperature
         self._attributes = {ATTR_ATTRIBUTION: ""}
         self._attributes.update(status_counts)
-        self._state = sum(status_counts.values())
+        self._state = "%s" %temperature
 
     @property
     def device_state_attributes(self):
@@ -255,11 +257,11 @@ class probabilitePluieAh(Entity):
 
         self._myMeteo.update()
         status_counts = defaultdict(int)
-        status_counts[0] = self._myMeteo.getProbaPluieDelai(self._delai)
-
+        pluie = self._myMeteo.getProbaPluieDelai(self._delai)
+        status_counts["Pluie"] = pluie
         self._attributes = {ATTR_ATTRIBUTION: ""}
         self._attributes.update(status_counts)
-        self._state = sum(status_counts.values())
+        self._state = "%s" %pluie
 
     @property
     def device_state_attributes(self):
@@ -304,11 +306,12 @@ class lastSynchro(Entity):
         """Update device state."""
 
         status_counts = defaultdict(int)
-        status_counts[0] = self._myMeteo.getLastSynchro()
+        lastSynchro = self._myMeteo.getLastSynchro()
 
+        status_counts["LastSynchro"] = lastSynchro
         self._attributes = {ATTR_ATTRIBUTION: ""}
         self._attributes.update(status_counts)
-        self._state = self._myMeteo.getLastSynchro().strftime("%d-%b-%Y (%H:%M:%S)")
+        self._state = lastSynchro.strftime("%d-%b-%Y (%H:%M:%S)")
 
     @property
     def device_state_attributes(self):
