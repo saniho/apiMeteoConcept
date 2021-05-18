@@ -24,6 +24,8 @@ from homeassistant.util.dt import now, parse_date
 
 _LOGGER = logging.getLogger(__name__)
 
+from . import const
+
 DOMAIN = "saniho"
 
 ICON = "mdi:package-variant-closed"
