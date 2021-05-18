@@ -1,0 +1,11 @@
+{
+    "domain": "apiMeteoConcept",
+    "name": "apiMeteoConcept sensor",
+    "documentation": "https://github.com/saniho/apiMeteoConcept/",
+    "config_flow": false,
+    "version": "1.0.0.1",
+    "requirements": [
+    ],
+    "dependencies": [],
+    "codeowners": []
+}
